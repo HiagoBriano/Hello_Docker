@@ -71,7 +71,8 @@ Viu a oportunidade de melhorar de alguma forma o repositório? Sinta-se à vonta
 ##### Comandos básicos:
 
 - Criar imagem usando o dockerfile:
-<br />
-`Base:` docker build -t {nome da imagem} {local da imagem} <br />
-`Exemplo:` docker build -t hiagobriano/example:latest . <br />
-`Se o arquivo tiver com o nome diferente:` docker build -t {nome da imagem} -f {nome do arquivo} {local da imagem}
+```js
+'Base:' docker build -t {nome da imagem} {local da imagem}
+'Exemplo:' docker build -t hiagobriano/example:latest .
+'Se o arquivo tiver com o nome diferente:' docker build -t {nome da imagem} -f {nome do arquivo} {local da imagem}
+```
