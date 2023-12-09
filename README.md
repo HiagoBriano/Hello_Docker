@@ -75,5 +75,6 @@ Viu a oportunidade de melhorar de alguma forma o repositório? Sinta-se à vonta
 ```js
 'Base:' docker build -t {nome da imagem} {local da imagem}
 'Exemplo:' docker build -t hiagobriano/example:latest .
-'Se o arquivo tiver com o nome diferente:' docker build -t {nome da imagem} -f {nome do arquivo} {local da imagem}
+'Se o Dockerfile estiver com o nome diferente:' docker build -t {nome da imagem} {local da imagem a partir do pwd atual} -f { caminho até o dockerfile + nome do arquivo} {local da imagem}
+'Exemplo:' docker build -t hiagobriano/laravel:latest dockerfile_examples -f dockerfile_examples/Dockerfile.Laravel.optimized
 ```
