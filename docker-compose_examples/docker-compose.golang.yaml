@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  go:
+    build:
+      context: ../dockerfile_examples
+      dockerfile: Dockerfile.GoLang
+    container_name: Go
+    volumes:
+      - ../Apps_for_docker_files/golang:/go/src/app
+    tty: true
+    command: ./golang
