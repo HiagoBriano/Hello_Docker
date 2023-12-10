@@ -1,7 +1,14 @@
 FROM node:20.5.0
+# Esta linha está puxando a imagem do Node.js versão 20.5.0 do Docker Hub.
 
 WORKDIR /usr/src/app
+# Define o diretório de trabalho dentro do contêiner para /usr/src/app.
+# Qualquer comando que você execute será executado neste diretório.
 
 CMD [ "npm", "start" ]
+# Define o comando padrão que será executado quando o contêiner for iniciado.
+# Neste caso, é o comando npm start, que geralmente inicia a aplicação Node.js.
 
 EXPOSE 3001
+# Informa ao Docker que o contêiner vai escutar na porta 3001.
+# Isso é útil para informar a outras pessoas que esta porta deve ser mapeada para permitir o acesso à aplicação.

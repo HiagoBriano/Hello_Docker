@@ -1,49 +1,49 @@
-version: '3'
+version: '3' # Define a versão do formato do arquivo docker-compose.
 
-services: 
+services: # Inicia a definição dos serviços que compõem o aplicativo.
 
-  app:
-    build: 
-      context: ../dockerfile_examples # pasta onde esta o dockerfile
-      dockerfile: Dockerfile.Nodejs.dev # nome do dockerfile
-    container_name: app
-    networks: 
-      - node-network
-    volumes: 
-      - ../Apps_for_docker_files/node:/usr/src/app
-    tty: true # para conseguirmos mexer no terminal do container caso precise
-    command: npm start # comando que vai rodar quando o container subir
-    ports: 
-      - "3001:3001"
-    restart: on-failure # se o container cair ele vai subir sozinho
-    depends_on: # informa que o container app depende do container db para funcionar
-       db:
-          condition: service_healthy # informa que o container app so vai subir quando o container db estiver saudavel
+  app: # Define um serviço chamado "app".
+    build: # Inicia a definição de como construir a imagem para este serviço.
+      context: ../dockerfile_examples #Define o contexto de construção como o diretório dockerfile_examples um nível acima do diretório atual.
+      dockerfile: Dockerfile.Nodejs.dev # Define o Dockerfile a ser usado para construir a imagem. Neste caso, é o arquivo Dockerfile.Nodejs.dev no contexto de construção.
+    container_name: app # Define o nome do contêiner quando ele é iniciado.
+    networks: # Define as redes às quais o serviço pertence.
+      - node-network # Adiciona o serviço à rede "node-network".
+    volumes: # Inicia a definição dos volumes que serão montados no contêiner.
+      - ../Apps_for_docker_files/node:/usr/src/app #Monta o diretório node no diretório Apps_for_docker_files um nível acima do diretório atual no diretório /usr/src/app no contêiner.
+    tty: true # Mantém o TTY aberto. Isso é útil se você quiser anexar ao contêiner e interagir com ele.
+    command: npm start # Define o comando que será executado quando o contêiner for iniciado. Neste caso, é o comando npm start.
+    ports: # Inicia a definição das portas que serão mapeadas do contêiner para o host.
+      - "3001:3001" # Mapeia a porta 3001 do contêiner para a porta 3001 do host.
+    restart: on-failure # Reinicia o contêiner se ele falhar.
+    depends_on: # Define quais serviços devem ser iniciados antes deste.
+       db: # Define que o serviço "db" deve ser iniciado antes deste.
+          condition: service_healthy # Define que o serviço "db" deve ser saudável antes de iniciar este serviço.
 
-  db:
-    image: mysql:5.7
-    command: --innodb-use-native-aio=0 # para funcionar de forma correta em qualquer maquina
-    container_name: db
-    restart: always # se o container cair ele vai subir sozinho
-    tty: true # para conseguirmos mexer no terminal do container caso precise
-    volumes: 
-      - ../Apps_for_docker_files/mysql:/var/lib/mysql # para salvar os dados do banco de dados
-      - ../Apps_for_docker_files/sql/sql.sql:/docker-entrypoint-initdb.d/sql.sql
-    environment: 
-      - MYSQL_DATABASE=nodedb # nome do banco de dados
-      - MYSQL_ROOT_PASSWORD=root # senha do usuario root
-    ports: 
-      - "3306:3306"
-    networks: 
-      - node-network
-    healthcheck:
-      test:
-        ['CMD', 'mysqladmin', 'ping', '-h', 'localhost', '-u', 'root', '-proot']
-      interval: 30s
-      timeout: 10s
-      retries: 10
-      start_period: 30s
+  db: # Define um serviço chamado "db".
+    image: mysql:5.7 # Define a imagem a ser usada para este serviço. Neste caso, é a imagem mysql:5.7 do Docker Hub.
+    command: --innodb-use-native-aio=0 # Define o comando que será executado quando o contêiner for iniciado. Neste caso, é um argumento para o servidor MySQL.
+    container_name: db # Define o nome do contêiner quando ele é iniciado.
+    restart: always # Sempre reinicia o contêiner, independentemente do motivo pelo qual ele parou.
+    tty: true # Mantém o TTY aberto. Isso é útil se você quiser anexar ao contêiner e interagir com ele.
+    volumes: # Inicia a definição dos volumes que serão montados no contêiner.
+      - ../Apps_for_docker_files/mysql:/var/lib/mysql # Monta o diretório mysql no diretório Apps_for_docker_files um nível acima do diretório atual no diretório /var/lib/mysql no contêiner.
+      - ../Apps_for_docker_files/sql/sql.sql:/docker-entrypoint-initdb.d/sql.sql # Monta o arquivo sql.sql no diretório sql no diretório Apps_for_docker_files um nível acima do diretório atual no diretório /docker-entrypoint-initdb.d/sql.sql no contêiner. Este diretório é onde o MySQL procura scripts de inicialização.
+    environment: # Inicia a definição das variáveis de ambiente que serão definidas no contêiner.
+      - MYSQL_DATABASE=nodedb
+      - MYSQL_ROOT_PASSWORD=root
+    ports: # Inicia a definição das portas que serão mapeadas do contêiner para o host.
+      - "3306:3306" # Mapeia a porta 3306 do contêiner para a porta 3306 do host. Esta é a porta padrão para o MySQL.
+    networks: # Define as redes às quais o serviço pertence.
+      - node-network # Adiciona o serviço à rede "node-network".
+    healthcheck: # Inicia a definição da verificação de saúde para o serviço.
+      test: # Define o comando que será usado para verificar a saúde do serviço.
+        ['CMD', 'mysqladmin', 'ping', '-h', 'localhost', '-u', 'root', '-proot'] # Este é o comando que será executado para verificar a saúde do serviço. Neste caso, ele usa o comando mysqladmin ping para verificar se o servidor MySQL está respondendo.
+      interval: 30s # Define o intervalo entre as verificações de saúde. Neste caso, a saúde do serviço será verificada a cada 30 segundos.
+      timeout: 10s # Define o tempo máximo que o Docker irá esperar por uma resposta da verificação de saúde antes de considerá-la falha.
+      retries: 10 # Define o número de tentativas consecutivas de verificação de saúde que devem falhar antes de considerar o serviço não saudável.
+      start_period: 30s # Define o período de tempo durante o qual o Docker não contará falhas na verificação de saúde para determinar se o serviço está saudável ou não. Isso é útil para serviços que demoram um pouco para iniciar.
 
-networks: 
-  node-network:
-    driver: bridge
+networks: # Inicia a definição das redes que serão usadas pelos serviços.
+  node-network: # Define uma rede chamada "node-network".
+    driver: bridge # Define o driver de rede a ser usado para esta rede. Neste caso, é o driver de ponte, que é o driver de rede padrão do Docker.

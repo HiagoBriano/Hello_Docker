@@ -1,12 +1,12 @@
-version: '3'
+version: '3' # Define a versão do formato do arquivo docker-compose.
 
-services:
-  go:
-    build:
-      context: ../dockerfile_examples
-      dockerfile: Dockerfile.GoLang
-    container_name: Go
-    volumes:
-      - ../Apps_for_docker_files/golang:/go/src/app
-    tty: true
-    command: ./golang
+services: # Inicia a definição dos serviços que compõem o aplicativo.
+  go: # Define um serviço chamado "go".
+    build: # Inicia a definição de como construir a imagem para este serviço.
+      context: ../dockerfile_examples #Define o contexto de construção como o diretório dockerfile_examples um nível acima do diretório atual.
+      dockerfile: Dockerfile.GoLang # Define o Dockerfile a ser usado para construir a imagem. Neste caso, é o arquivo Dockerfile.GoLang no contexto de construção.
+    container_name: Go # Define o nome do contêiner quando ele é iniciado.
+    volumes: # Inicia a definição dos volumes que serão montados no contêiner.
+      - ../Apps_for_docker_files/golang:/go/src/app # Monta o diretório golang no diretório Apps_for_docker_files um nível acima do diretório atual no diretório /go/src/app no contêiner.
+    tty: true # Mantém o TTY aberto. Isso é útil se você quiser anexar ao contêiner e interagir com ele.
+    command: ./golang # Define o comando que será executado quando o contêiner for iniciado. Neste caso, é o executável golang.

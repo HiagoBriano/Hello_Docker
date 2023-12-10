@@ -1,6 +1,8 @@
 FROM php:7.4-cli
+# Esta linha está puxando a imagem do PHP 7.4 CLI (Command Line Interface) do Docker Hub.
 
 WORKDIR /var/www
+# Define o diretório de trabalho dentro do contêiner para /var/www.
 
 RUN apt-get update && \
     apt-get install libzip-dev -y && \
@@ -9,10 +11,19 @@ RUN apt-get update && \
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
     php composer-setup.php && \
     php -r "unlink('composer-setup.php');"
+# Atualiza a lista de pacotes disponíveis, instala a biblioteca libzip-dev e instala a extensão zip do PHP.
 
 RUN php composer.phar create-project --prefer-dist laravel/laravel laravel
+# Usa o Composer para criar um novo projeto Laravel no diretório laravel.
 
 EXPOSE 8000
+# Informa ao Docker que o contêiner vai escutar na porta 8000.
 
 ENTRYPOINT [ "php", "laravel/artisan", "serve" ]
+# Define o comando padrão que será executado quando o contêiner for iniciado.
+# Neste caso, é o comando serve do Artisan, que inicia o servidor de desenvolvimento do Laravel.
+
 CMD [ "--host=0.0.0.0" ]
+# Define o argumento padrão para o comando ENTRYPOINT.
+# Neste caso, faz com que o servidor de desenvolvimento do Laravel escute em todas as interfaces de rede.
+# Isso é necessário para que o servidor de desenvolvimento do Laravel seja acessível de fora do contêiner.

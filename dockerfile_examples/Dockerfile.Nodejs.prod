@@ -1,11 +1,21 @@
 FROM node:15
+# Esta linha está puxando a imagem do Node.js versão 15 do Docker Hub.
 
 WORKDIR /usr/src/app
+# Define o diretório de trabalho dentro do contêiner para /usr/src/app.
+# Qualquer comando que você execute será executado neste diretório.
 
 COPY . .
+# Copia todos os arquivos do diretório atual no host para o diretório de trabalho no contêiner.
 
 EXPOSE 3000
+# Informa ao Docker que o contêiner vai escutar na porta 3000.
+# Isso é útil para informar a outras pessoas que esta porta deve ser mapeada para permitir o acesso à aplicação.
 
 RUN npm install
+# Executa o comando npm install no diretório de trabalho do contêiner.
+# Isso instala todas as dependências do projeto, conforme especificado no arquivo package.json.
 
 CMD [ "npm", "start" ]
+# Define o comando padrão que será executado quando o contêiner for iniciado.
+# Neste caso, é o comando npm start, que geralmente inicia a aplicação Node.js.
