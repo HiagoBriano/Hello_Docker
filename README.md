@@ -43,6 +43,7 @@ Viu a oportunidade de melhorar de alguma forma o repositório? Sinta-se à vonta
 - `-p` linca a porta do seu computador com a do container.
 - `-d` executa em segundo plano.
 - `-v` adiciona volume (para persistir os dados).
+- `-e` serve para conseguir colocar varial de ambiente.
 - `--name` permite que você dar um nome ao container.
 - `--network` permite que coloque ele em uma rede especifica.
 
@@ -50,13 +51,13 @@ Viu a oportunidade de melhorar de alguma forma o repositório? Sinta-se à vonta
 
 - docker run -it ubuntu bash
 - docker run -d -p 8080:80 --name xpto nginx
-- docker run -d -p 8080:80 --name xpto -v ./html/:/usr/share/nginx/html nginx
+- docker run -d -p 8080:80 --name xpto -v ./Apps_for_docker_files/html/:/usr/share/nginx/html nginx
 
 #
 
 ### Trabalhando com Dockerfile:
 
-##### Parametros:
+##### Parâmetros:
 
 - `FROM` escolher a imagem base.
 - `WORKDIR` define pasta de trabalho.
@@ -78,3 +79,10 @@ Viu a oportunidade de melhorar de alguma forma o repositório? Sinta-se à vonta
 'Se o Dockerfile estiver com o nome diferente:' docker build -t {nome da imagem} {local da imagem a partir do pwd atual} -f { caminho até o dockerfile + nome do arquivo} {local da imagem}
 'Exemplo:' docker build -t hiagobriano/laravel:latest dockerfile_examples -f dockerfile_examples/Dockerfile.Laravel.optimized
 ```
+### Trabalhando com docker-compose:
+
+##### Comandos básicos:
+
+- `docker-compose up {parâmetros}` sobre o arquivo que estiver na pasta.
+- `docker-compose down` para e apaga o container.
+- `docker-compose ps` mostra eles ativo.
