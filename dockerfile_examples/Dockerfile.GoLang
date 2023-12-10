@@ -1,0 +1,34 @@
+FROM golang:latest AS build
+# Esta linha está puxando a imagem mais recente do Golang do Docker Hub e nomeando essa fase da construção como "build".
+
+WORKDIR /app
+# Define o diretório de trabalho dentro do contêiner para /app.
+
+COPY ../Apps_for_docker_files/golang .
+# Copia todos os arquivos do diretório especificado no host para o diretório de trabalho no contêiner.
+
+RUN CGO_ENABLED=0 GOOS=linux go build -o golang main.go
+# Esta linha está compilando o código Go no contêiner. O executável resultante é chamado de "golang".
+
+FROM scratch
+# Inicia uma nova fase de construção com uma imagem vazia. Isso é útil para criar imagens Docker muito pequenas.
+
+WORKDIR /app
+# Define o diretório de trabalho dentro do contêiner para /app.
+
+COPY --from=build /app/golang ./
+# Copia o executável "golang" da fase de construção para o diretório de trabalho na nova imagem.
+
+CMD ["./golang"]
+# Define o comando padrão que será executado quando o contêiner for iniciado. Neste caso, é o executável "golang".
+
+########### Curiosidade: ###########
+
+# A imagem scratch é uma imagem especial do Docker que é completamente vazia.
+# Ela é frequentemente usada para construir imagens Docker "do zero".
+# Isso significa que você começa com uma imagem completamente vazia e adiciona
+# apenas o que precisa para sua aplicação, resultando em uma imagem muito pequena e segura.
+
+# Por outro lado, a imagem golang é uma imagem base que já contém o ambiente
+# de execução Go e todas as suas dependências. Ela é maior do que uma imagem scratch
+# e contém muitos arquivos e configurações que podem não ser necessários para sua aplicação.
