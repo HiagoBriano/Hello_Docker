@@ -25,7 +25,7 @@ services:
     restart: always # se o container cair ele vai subir sozinho
     tty: true # para conseguirmos mexer no terminal do container caso precise
     volumes: 
-      - ../Apps_for_docker_files/MySQL:/var/lib/mysql # para salvar os dados do banco de dados
+      - ../Apps_for_docker_files/mysql:/var/lib/mysql # para salvar os dados do banco de dados
     environment: 
       - MYSQL_DATABASE=nodedb # nome do banco de dados
       - MYSQL_ROOT_PASSWORD=root # senha do usuario root
