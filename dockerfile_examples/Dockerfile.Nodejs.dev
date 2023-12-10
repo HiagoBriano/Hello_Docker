@@ -9,4 +9,8 @@ WORKDIR /usr/src/app
 #     && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
 #     && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
+RUN npm i
+
 EXPOSE 3000
+
+CMD ["node", "index.js"]

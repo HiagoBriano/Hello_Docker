@@ -15,8 +15,15 @@ services:
     tty: true # para conseguirmos mexer no terminal do container caso precise
     ports: 
       - "3000:3000"
+    command: node index.js
+    restart: on-failure # se o container cair ele vai subir sozinho
     depends_on: # informa que o container app depende do container db para funcionar
-       - db
+       db:
+          condition: service_healthy # informa que o container app so vai subir quando o container db estiver saudavel
+    healthcheck:
+      test: ['CMD', 'lsof', '-t', '-i:3000']
+      timeout: 10s
+      retries: 5
 
   db:
     image: mysql:5.7
@@ -26,11 +33,21 @@ services:
     tty: true # para conseguirmos mexer no terminal do container caso precise
     volumes: 
       - ../Apps_for_docker_files/mysql:/var/lib/mysql # para salvar os dados do banco de dados
+      - ../Apps_for_docker_files/sql/sql.sql:/docker-entrypoint-initdb.d/sql.sql
     environment: 
       - MYSQL_DATABASE=nodedb # nome do banco de dados
       - MYSQL_ROOT_PASSWORD=root # senha do usuario root
+    ports: 
+      - "3306:3306"
     networks: 
       - node-network
+    healthcheck:
+      test:
+        ['CMD', 'mysqladmin', 'ping', '-h', 'localhost', '-u', 'root', '-proot']
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
 
 networks: 
   node-network:
