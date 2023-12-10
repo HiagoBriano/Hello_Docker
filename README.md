@@ -19,14 +19,14 @@ Viu a oportunidade de melhorar de alguma forma o repositório? Sinta-se à vonta
 
 ### Comandos básicos para o terminal:
 
-- `docker ps` mostra os containers que estão rodando na máquina.
-- `docker ps -a` mostra os containers, inclusive os finalizados.
-- `docker start {nome ou id}` inicia container parado.
-- `docker stop {nome ou id}` para o container.
-- `docker rm {nome ou id}` remove container parado.
-- `docker rm $(docker ps -a -q) -f` remove todos os containers.
+- `docker ps` mostra os contêiners que estão rodando na máquina.
+- `docker ps -a` mostra os contêiners, inclusive os finalizados.
+- `docker start {nome ou id}` inicia contêiner parado.
+- `docker stop {nome ou id}` para o contêiner.
+- `docker rm {nome ou id}` remove contêiner parado.
+- `docker rm $(docker ps -a -q) -f` remove todos os contêiners.
 - `docker run {parâmetros} {image} {comando}` executa a imagem.
-- `docker exec {parâmetros} {nome ou id} {comando}` executa um comando no container que está rodando.
+- `docker exec {parâmetros} {nome ou id} {comando}` executa um comando no contêiner que está rodando.
 - `docker volume ls` mostra os volumes do docker.
 - `docker volume prune` apaga todos os volumes da maquina.
 - `docker images` mostra todas as imagens do docker.
@@ -34,17 +34,17 @@ Viu a oportunidade de melhorar de alguma forma o repositório? Sinta-se à vonta
 - `docker rmi $(docker images -a -q) -f` remove todas as imagens.
 - `docker network ls` mostra todas as redes do docker.
 - `docker network prune` apaga todas as redes que não estão sendo usadas.
-- `docker network connect {rede} {nome ou id do container}` coloca o container na rede especificada.
+- `docker network connect {rede} {nome ou id do contêiner}` coloca o contêiner na rede especificada.
 
 ##### Alguns parâmetros:
 
 - `-i` trava o terminal.
 - `-t` deixa o terminal interativo.
-- `-p` linca a porta do seu computador com a do container.
+- `-p` linca a porta do seu computador com a do contêiner.
 - `-d` executa em segundo plano.
 - `-v` adiciona volume (para persistir os dados).
 - `-e` serve para conseguir colocar varial de ambiente.
-- `--name` permite que você dar um nome ao container.
+- `--name` permite que você dar um nome ao contêiner.
 - `--network` permite que coloque ele em uma rede especifica.
 
 ##### Exemplos:
@@ -64,8 +64,8 @@ Viu a oportunidade de melhorar de alguma forma o repositório? Sinta-se à vonta
 - `ENTRYPOINT` é usada para configurar um comando que será executado quando um contêiner baseado na imagem for iniciado.
 - `CMD` faz a mesma coisa que o ENTRYPOINT, a diferença é que esse comando pode ser substituido quando for subir a imagem.
 - `RUN` é usada para executar comandos durante o processo de construção da imagem. Esses comandos são executados apenas uma vez durante a criação da imagem e não têm impacto no contêiner em execução.
-- `EXPOSE` é a porta que o container vai expor.
-- `COPY` copia arquivos para dentro do containers.
+- `EXPOSE` é a porta que o contêiner vai expor.
+- `COPY` copia arquivos para dentro do contêiners.
 
 [Clique aqui para ver exemplos de Dockerfiles](./dockerfile_examples)
 
@@ -84,5 +84,5 @@ Viu a oportunidade de melhorar de alguma forma o repositório? Sinta-se à vonta
 ##### Comandos básicos:
 
 - `docker-compose up {parâmetros}` sobre o arquivo que estiver na pasta.
-- `docker-compose down` para e apaga o container.
+- `docker-compose down` para e apaga o contêiner.
 - `docker-compose ps` mostra eles ativo.
