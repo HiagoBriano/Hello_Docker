@@ -7,23 +7,18 @@ services:
       context: ../dockerfile_examples # pasta onde esta o dockerfile
       dockerfile: Dockerfile.Nodejs.dev # nome do dockerfile
     container_name: app
-    # entrypoint: dockerize -wait tcp://db:3306 -timeout 20s docker-entrypoint.sh
     networks: 
       - node-network
     volumes: 
       - ../Apps_for_docker_files/node:/usr/src/app
     tty: true # para conseguirmos mexer no terminal do container caso precise
+    command: npm start # comando que vai rodar quando o container subir
     ports: 
-      - "3000:3000"
-    command: node index.js
+      - "3001:3001"
     restart: on-failure # se o container cair ele vai subir sozinho
     depends_on: # informa que o container app depende do container db para funcionar
        db:
           condition: service_healthy # informa que o container app so vai subir quando o container db estiver saudavel
-    healthcheck:
-      test: ['CMD', 'lsof', '-t', '-i:3000']
-      timeout: 10s
-      retries: 5
 
   db:
     image: mysql:5.7
